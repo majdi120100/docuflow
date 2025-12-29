@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compress PDF files online - Reduce PDF file size while maintaining quality">
+    <title>Compress PDF - DocuFlow</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/images/placeholders/favicon.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-file-earmark-text-fill text-primary fs-3"></i>
+                <span class="fw-bold ms-2">DocuFlow</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="tools.html">Tools</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <button class="theme-toggle btn btn-outline-secondary btn-sm" id="themeToggle" aria-label="Toggle dark mode">
+                            <i class="bi bi-moon-fill"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Tool Header -->
+    <section class="tool-header bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="tool-icon-large mb-3">
+                        <i class="bi bi-file-pdf-fill"></i>
+                    </div>
+                    <h1 class="fw-bold mb-3">Compress PDF</h1>
+                    <p class="lead text-muted mb-4">
+                        Reduce PDF file size while maintaining quality. Perfect for email attachments and web uploads.
+                    </p>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <span class="badge bg-light text-dark border px-3 py-2">
+                            <i class="bi bi-lightning-charge-fill text-warning"></i> Fast Processing
+                        </span>
+                        <span class="badge bg-light text-dark border px-3 py-2">
+                            <i class="bi bi-shield-check text-success"></i> Secure
+                        </span>
+                        <span class="badge bg-light text-dark border px-3 py-2">
+                            <i class="bi bi-gift-fill text-primary"></i> Free
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="tool-illustration text-center">
+                        <img src="../assets/images/placeholders/tool-illustration.svg" alt="Compress PDF Illustration" class="img-fluid" style="max-height: 300px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Workspace -->
+    <section class="tool-workspace py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    
+                    <!-- Upload Area -->
+                    <div id="uploadArea" class="upload-area">
+                        <div class="upload-content text-center">
+                            <i class="bi bi-cloud-upload upload-icon"></i>
+                            <h4 class="fw-semibold mb-2">Drop your PDF here</h4>
+                            <p class="text-muted mb-4">or click to browse</p>
+                            <input type="file" id="fileInput" accept=".pdf" hidden>
+                            <button class="btn btn-primary btn-lg px-5" id="selectFileBtn">
+                                Select PDF File
+                            </button>
+                            <p class="small text-muted mt-3 mb-0">Maximum file size: 50MB</p>
+                        </div>
+                    </div>
+
+                    <!-- Processing Area -->
+                    <div id="processingArea" class="processing-area" style="display: none;">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="d-flex align-items-center mb-4">
+                                    <div class="file-icon me-3">
+                                        <i class="bi bi-file-pdf-fill text-danger fs-1"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1 fw-semibold" id="fileName">document.pdf</h6>
+                                        <p class="small text-muted mb-0" id="fileSize">2.5 MB</p>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline-danger" id="cancelBtn">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Compression Options -->
+                                <div id="compressionOptions" class="compression-options mb-4">
+                                    <label class="form-label fw-semibold">Compression Level</label>
+                                    <div class="btn-group w-100" role="group">
+                                        <input type="radio" class="btn-check" name="compressionLevel" id="lowCompression" value="low" checked>
+                                        <label class="btn btn-outline-primary" for="lowCompression">
+                                            <div class="fw-semibold">Low</div>
+                                            <small class="d-block text-muted">Better quality</small>
+                                        </label>
+
+                                        <input type="radio" class="btn-check" name="compressionLevel" id="mediumCompression" value="medium">
+                                        <label class="btn btn-outline-primary" for="mediumCompression">
+                                            <div class="fw-semibold">Medium</div>
+                                            <small class="d-block text-muted">Balanced</small>
+                                        </label>
+
+                                        <input type="radio" class="btn-check" name="compressionLevel" id="highCompression" value="high">
+                                        <label class="btn btn-outline-primary" for="highCompression">
+                                            <div class="fw-semibold">High</div>
+                                            <small class="d-block text-muted">Smaller size</small>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-primary w-100 btn-lg" id="processBtn">
+                                    <i class="bi bi-gear-fill me-2"></i>
+                                    Compress PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Area -->
+                    <div id="progressArea" class="progress-area" style="display: none;">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4 text-center">
+                                <div class="spinner-border text-primary mb-3" role="status">
+                                    <span class="visually-hidden">Processing...</span>
+                                </div>
+                                <h5 class="fw-semibold mb-2">Compressing your PDF...</h5>
+                                <p class="text-muted mb-4">This may take a few moments</p>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" id="progressBar" style="width: 0%"></div>
+                                </div>
+                                <p class="small text-muted mt-2 mb-0" id="progressText">0%</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result Area -->
+                    <div id="resultArea" class="result-area" style="display: none;">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="text-center mb-4">
+                                    <div class="success-icon mb-3">
+                                        <i class="bi bi-check-circle-fill text-success"></i>
+                                    </div>
+                                    <h5 class="fw-semibold mb-2">Compression Complete!</h5>
+                                    <p class="text-muted mb-0">Your PDF has been compressed successfully</p>
+                                </div>
+
+                                <div class="compression-stats mb-4">
+                                    <div class="row g-3">
+                                        <div class="col-6">
+                                            <div class="stat-card text-center">
+                                                <p class="small text-muted mb-1">Original Size</p>
+                                                <h6 class="fw-bold mb-0" id="originalSize">2.5 MB</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="stat-card text-center">
+                                                <p class="small text-muted mb-1">New Size</p>
+                                                <h6 class="fw-bold text-success mb-0" id="newSize">1.2 MB</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <span class="badge bg-success-subtle text-success px-3 py-2">
+                                            <i class="bi bi-arrow-down-circle-fill me-1"></i>
+                                            <span id="reductionPercent">52%</span> size reduction
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-success w-100 btn-lg mb-2" id="downloadBtn">
+                                    <i class="bi bi-download me-2"></i>
+                                    Download Compressed PDF
+                                </button>
+                                <button class="btn btn-outline-primary w-100" id="compressAnotherBtn">
+                                    <i class="bi bi-arrow-clockwise me-2"></i>
+                                    Compress Another File
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-3">Why Use Our PDF Compressor?</h2>
+                <p class="text-muted">Professional features for optimal results</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-speedometer2"></i>
+                        </div>
+                        <h6 class="fw-semibold mb-2">Fast Processing</h6>
+                        <p class="text-muted small mb-0">Compress files in seconds</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-eye-fill"></i>
+                        </div>
+                        <h6 class="fw-semibold mb-2">Quality Maintained</h6>
+                        <p class="text-muted small mb-0">Keep visual quality intact</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-shield-lock-fill"></i>
+                        </div>
+                        <h6 class="fw-semibold mb-2">100% Secure</h6>
+                        <p class="text-muted small mb-0">Files deleted after processing</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-cloud-fill"></i>
+                        </div>
+                        <h6 class="fw-semibold mb-2">No Installation</h6>
+                        <p class="text-muted small mb-0">Works in your browser</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-3">How It Works</h2>
+                <p class="text-muted">Simple process in three steps</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="step-card text-center">
+                        <div class="step-number">1</div>
+                        <h5 class="fw-semibold mb-2">Upload PDF</h5>
+                        <p class="text-muted small mb-0">Select or drag and drop your PDF file</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="step-card text-center">
+                        <div class="step-number">2</div>
+                        <h5 class="fw-semibold mb-2">Choose Compression</h5>
+                        <p class="text-muted small mb-0">Select your preferred compression level</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="step-card text-center">
+                        <div class="step-number">3</div>
+                        <h5 class="fw-semibold mb-2">Download Result</h5>
+                        <p class="text-muted small mb-0">Get your compressed PDF instantly</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Tools -->
+    <section class="related-tools py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-3">Related Tools</h2>
+                <p class="text-muted">Other useful PDF tools you might need</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="bi bi-file-earmark-arrow-down"></i>
+                        </div>
+                        <h5 class="fw-semibold mb-2">Merge PDF</h5>
+                        <p class="text-muted small mb-3">Combine multiple PDFs into one</p>
+                        <a href="tool-single.html?tool=merge-pdf" class="btn btn-outline-primary btn-sm">
+                            Use Tool
+                            <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="bi bi-scissors"></i>
+                        </div>
+                        <h5 class="fw-semibold mb-2">Split PDF</h5>
+                        <p class="text-muted small mb-3">Extract pages from PDF</p>
+                        <a href="tool-single.html?tool=split-pdf" class="btn btn-outline-primary btn-sm">
+                            Use Tool
+                            <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="bi bi-arrow-left-right"></i>
+                        </div>
+                        <h5 class="fw-semibold mb-2">PDF to Word</h5>
+                        <p class="text-muted small mb-3">Convert to editable format</p>
+                        <a href="tool-single.html?tool=pdf-to-word" class="btn btn-outline-primary btn-sm">
+                            Use Tool
+                            <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5 bg-dark text-white">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-file-earmark-text-fill fs-3 text-primary"></i>
+                        <span class="fw-bold fs-5 ms-2">DocuFlow</span>
+                    </div>
+                    <p class="text-white-50 mb-3">Professional document management platform providing comprehensive tools for all your file needs.</p>
+                    <div class="social-links">
+                        <a href="#" class="text-white-50 me-3" aria-label="Facebook"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-white-50 me-3" aria-label="Twitter"><i class="bi bi-twitter fs-5"></i></a>
+                        <a href="#" class="text-white-50 me-3" aria-label="LinkedIn"><i class="bi bi-linkedin fs-5"></i></a>
+                        <a href="#" class="text-white-50" aria-label="Instagram"><i class="bi bi-instagram fs-5"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="fw-semibold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="tools.html" class="text-white-50 text-decoration-none">Tools</a></li>
+                        <li class="mb-2"><a href="about.html" class="text-white-50 text-decoration-none">About</a></li>
+                        <li class="mb-2"><a href="contact.html" class="text-white-50 text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4">
+                    <h6 class="fw-semibold mb-3">Popular Tools</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="tool-single.html?tool=compress-pdf" class="text-white-50 text-decoration-none">Compress PDF</a></li>
+                        <li class="mb-2"><a href="tool-single.html?tool=merge-pdf" class="text-white-50 text-decoration-none">Merge PDF</a></li>
+                        <li class="mb-2"><a href="tool-single.html?tool=pdf-to-word" class="text-white-50 text-decoration-none">PDF to Word</a></li>
+                        <li class="mb-2"><a href="tool-single.html?tool=protect-pdf" class="text-white-50 text-decoration-none">Protect PDF</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4">
+                    <h6 class="fw-semibold mb-3">Legal</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Terms of Service</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-white-50">
+            <div class="text-center text-white-50">
+                <p class="mb-0">&copy; 2024 DocuFlow. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
